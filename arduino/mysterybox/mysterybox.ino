@@ -6,6 +6,7 @@
 */
 
 int stage = 0;
+const bool debug = false;
 
 // 7dots
 const int led[] = {0,1,2,3,4,5,6}; //LED pins
@@ -14,11 +15,17 @@ bool buttonstate[] = {0,0,0,0,0,0,0};
 bool ledstate[] = {0,0,0,0,0,0,0};
 bool reset[] = {0,0,0,0,0,0,0};
 
+//MagnetPanel
+const int magnetPanelPin = A0;
+
+//MetalBar
+const int metalBarPin = A1;
+
 
 bool stage1(){
 
   if((ledstate[0]==true) && (ledstate[1]==true) && (ledstate[2]==true) && (ledstate[3]==true) && (ledstate[4]==true) && (ledstate[5]==true) && (ledstate[6]==true)){
-    Serial.println("All LEDs turned on. Stage one complete.");
+    if(debug){Serial.println("[7dots]: All LEDs turned on. Stage one complete.");}
   
     //visual confirmation
     for(int j=0; j<4; j++){
@@ -74,42 +81,78 @@ bool stage1(){
 }
 
 
-
 bool stage2(){
+  if(digitalRead(magnetPanelPin)==HIGH){
+    stage++;
+    if(debug){Serial.println("[stage2]: Magnet Panel combination correct! Proceed with stage 3.");}
+  }
 
+}
+
+
+bool stage3(){
+
+  if(digitalRead(metalBarPin) == HIGH){
+    stage++;
+    if(debug){Serial.println("[stage3]: Metal Bar connectors bridged, success! Proceed with stage 4.");}
+  }
+  
 }
 
 
 void setup() {
   // put your setup code here, to run once:
 
-  //Serial.begin(9600);
+  if(debug){Serial.begin(9600);}
 
   // 7dots
   for(int i = 0; i<7; i++){
     pinMode(led[i], OUTPUT);
     pinMode(button[i], INPUT);
   }
+
+  //MagnetPanel
+  pinMode(magnetPanelPin, INPUT);
+
+  //MetalBar
+  pinMode(metalBarPin, INPUT);
     
   stage = 1;
-  Serial.println("Initialized.");
+  if(debug){Serial.println("[Setup]: Initialized.");}
 }
 
 void loop() {
 
   switch(stage){
 
-    case 1:
+    case 1: //7dots
       stage1();
       break;
 
-    case 2:
+    case 2: //MagnetPanel
+      stage2();
+      break;
+
+    case 3:
+      stage3();
       break;
 
     default:
-      Serial.print("[switch]: stage is ");
-      Serial.println(stage);
+      if(debug){Serial.println("[Switch]: Error! default case");}
       break;
+
   }
+  
+  if(debug){
+    static int lastTimestamp = millis();
+    static int throttle = 2000;
+    if((millis()-lastTimestamp) > throttle){
+      Serial.print("[Main Loop]: stage is ");
+      Serial.println(stage);
+      lastTimestamp = millis();
+    }
+  }
+  
+
 
 }
