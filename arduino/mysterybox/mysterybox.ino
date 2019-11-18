@@ -30,35 +30,7 @@ MetalBar metalBar(metalBarPin);
 int stage = 0;
 
 
-bool stage1(){
-  if(sevenDots.spinOnce()){
-    if(debug){Serial.println("[stage1]: All 7 LEDs are on, success!");}
-    return true;
-  }
-  return false;
-}
-
-
-bool stage2(){
-  if(magnetPanel.spinOnce()){
-    if(debug){Serial.println("[stage2]: Magnet Panel combination correct!");}
-    return true;
-  }
-  return false;
-}
-
-
-bool stage3(){
-  if(digitalRead(metalBarPin) == HIGH){
-    if(debug){Serial.println("[stage3]: Metal Bar connectors bridged, success!");}
-    return true;
-  }
-  return false;
-}
-
-
 void setup() {
-  // put your setup code here, to run once:
 
   if(debug){
     Serial.begin(9600);
@@ -75,15 +47,18 @@ void setup() {
   metalBar.setup();
     
   stage = 1;
+  
   if(debug){Serial.println("[Setup]: Initialized.");}
+  
 }
+
 
 void loop() {
 
   switch(stage){
 
-    case 1: //7dots
-      if(stage1()){
+    case 1: //SevenDots
+      if(sevenDots.spinOnce()||true){ //TODO: remove true
         if(debug){Serial.println("[Switch]: Stage 1 complete. Proceed with stage 2.");}
         stage++;
         //TODO: maybe redeclare pinModes here? this allows re-using pins
@@ -91,14 +66,14 @@ void loop() {
       break;
 
     case 2: //MagnetPanel
-      if(stage2()){
+      if(magnetPanel.spinOnce()){
         if(debug){Serial.println("[Switch]: Stage 2 complete. Proceed with stage 3.");}
         stage++;
       }
       break;
 
-    case 3:
-      if(stage3()){
+    case 3: //MetalBar
+      if(metalBar.spinOnce()){
         if(debug){Serial.println("[Switch]: Stage 3 complete. Proceed with stage 4.");}
         stage++;
       }
@@ -106,19 +81,19 @@ void loop() {
 
     default:
       if(debug){
-        Serial.print("[Switch]: Error! default case, stage: ");
+        Serial.print("[Switch]: Error, stage number invalid! Stage: ");
         Serial.println(stage);
       }
-      delay(500);
+      delay(2000);
       break;
-
-  }
+      
+  } //end switch
   
   if(debug){
     static unsigned long int lastTimestamp = millis();
     static int throttle = 2000;
     if((millis()-lastTimestamp) > throttle){
-      Serial.print("[Main Loop]: stage is ");
+      Serial.print("[Main Loop]: Stage is ");
       Serial.println(stage);
       lastTimestamp = millis();
     }
