@@ -6,6 +6,7 @@
 */
 
 #include "sevendots.h"
+#include "magnetpanel.h"
 
 /// config ///
 const bool debug = false;
@@ -18,6 +19,8 @@ SevenDots sevenDots(led, button);
 
 // MagnetPanel
 const int magnetPanelPin = A0;
+MagnetPanel magnetPanel(magnetPanelPin);
+
 
 // MetalBar
 const int metalBarPin = A1;
@@ -33,9 +36,8 @@ bool stage1(){
 
 
 bool stage2(){
-  if(digitalRead(magnetPanelPin)==HIGH){
-    stage++;
-    if(debug){Serial.println("[stage2]: Magnet Panel combination correct! Proceed with stage 3.");}
+  if(magnetPanel.spinOnce()){
+    if(debug){Serial.println("[stage2]: Magnet Panel combination correct!");}
   }
 }
 
@@ -57,7 +59,7 @@ void setup() {
   sevenDots.setup();
 
   //MagnetPanel
-  pinMode(magnetPanelPin, INPUT);
+  magnetPanel.setup();
 
   //MetalBar
   pinMode(metalBarPin, INPUT);
@@ -79,7 +81,10 @@ void loop() {
       break;
 
     case 2: //MagnetPanel
-      stage2();
+      if(stage2()){
+        if(debug){Serial.println("[switch]: Stage 2 complete. Proceed with stage 3.");}
+        stage++;
+      }
       break;
 
     case 3:
@@ -87,13 +92,16 @@ void loop() {
       break;
 
     default:
-      if(debug){Serial.println("[Switch]: Error! default case");}
+      if(debug){
+        Serial.print("[switch]: Error! default case, stage: ");
+        Serial.println(stage);
+      }
       break;
 
   }
   
   if(debug){
-    static int lastTimestamp = millis();
+    static unsigned long int lastTimestamp = millis();
     static int throttle = 2000;
     if((millis()-lastTimestamp) > throttle){
       Serial.print("[Main Loop]: stage is ");
