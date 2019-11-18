@@ -7,25 +7,27 @@
 
 #include "sevendots.h"
 
-
-int stage = 0;
+/// config ///
 const bool debug = false;
+
 
 // 7dots
 const int led[] = {0,1,2,3,4,5,6}; //LED pins
 const int button[] = {7,8,9,10,11,12,13}; //TODO remap these pin numbers, arduino uno doesnt have enough pins
 SevenDots sevenDots(led, button);
 
-//MagnetPanel
+// MagnetPanel
 const int magnetPanelPin = A0;
 
-//MetalBar
+// MetalBar
 const int metalBarPin = A1;
+
+int stage = 0;
 
 
 bool stage1(){
   if(sevenDots.spinOnce()){
-    if(debug){Serial.println("[stage1]: All 7 LEDs on, success! Proceed with stage 2.");}
+    if(debug){Serial.println("[stage1]: All 7 LEDs are on, success!");}
   }
 }
 
@@ -70,6 +72,7 @@ void loop() {
 
     case 1: //7dots
       if(stage1()){
+        if(debug){Serial.println("[switch]: Stage 1 complete. Proceed with stage 2.");}
         stage++;
         //TODO: maybe redeclare pinModes here? this allows re-using pins
       }
