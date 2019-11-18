@@ -1,6 +1,6 @@
 // Copy this into Arduino IDE and upload
 
-/* 
+/*
   Author: Luca Ebner
   Date: November 2019
 */
