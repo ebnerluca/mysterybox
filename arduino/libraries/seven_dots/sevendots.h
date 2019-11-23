@@ -23,6 +23,8 @@ class SevenDots{
 		const bool defaultLedstate_[7] = {0,0,0,0,0,0,0};
         int buttonCounter_ = 0;
 
+        bool updateReadings();
+        bool updateStates();
         bool success();
 };
 
