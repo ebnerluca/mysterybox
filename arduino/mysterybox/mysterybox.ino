@@ -14,8 +14,8 @@ const bool debug = true;
 
 
 // 7dots
-const int led[] = {0,1,2,3,4,5,6}; //LED pins
-const int button[] = {7,8,9,10,11,12,13}; //TODO remap these pin numbers, arduino uno doesnt have enough pins
+const int led[] = {5,4,3,2,6,7,8}; //LED pins
+const int button[] = {9,10,11,12,A1,A2,A3}; //TODO remap these pin numbers, arduino uno doesnt have enough pins
 SevenDots sevenDots(led, button);
 
 // MagnetPanel
@@ -34,11 +34,10 @@ void setup() {
 
   if(debug){
     Serial.begin(9600);
-    delay(2000);
   }
 
   // 7dots
-  //sevenDots.setup();
+  sevenDots.setup();
 
   //MagnetPanel
   magnetPanel.setup();
@@ -58,7 +57,7 @@ void loop() {
   switch(stage){
 
     case 1: //SevenDots
-      if(sevenDots.spinOnce()||true){ //TODO: remove true
+      if(sevenDots.spinOnce()){
         if(debug){Serial.println("[Switch]: Stage 1 complete. Proceed with stage 2.");}
         stage++;
         //TODO: maybe redeclare pinModes here? this allows re-using pins
