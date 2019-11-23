@@ -21,6 +21,9 @@ class SevenDots{
     	bool buttonstate_[7] = {0,0,0,0,0,0,0};
 		bool ledstate_[7] = {0,0,0,0,0,0,0};
 		const bool defaultLedstate_[7] = {0,0,0,0,0,0,0};
+        int buttonCounter_ = 0;
+
+        bool success();
 };
 
 #endif
