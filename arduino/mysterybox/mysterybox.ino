@@ -14,8 +14,8 @@ const bool debug = true;
 
 
 // 7dots
-const int led[] = {5,4,3,2,6,7,8}; //LED pins
-const int button[] = {9,10,11,12,A1,A2,A3}; //TODO remap these pin numbers, arduino uno doesnt have enough pins
+const int led[] = {12,11,10,9,8,7,6}; //LED pins
+const int button[] = {A0,A1,A2,A3,A4,A5,5}; //TODO remap these pin numbers, arduino uno doesnt have enough pins
 SevenDots sevenDots(led, button);
 
 // MagnetPanel
