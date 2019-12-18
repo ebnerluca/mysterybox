@@ -77,8 +77,19 @@ bool SevenDots::reset(){
 
 bool SevenDots::updateReadings(){
 
-  for(int i = 0; i<7; i++){
+  /*for(int i = 0; i<7; i++){
     buttonstate_[i] = digitalRead(buttonPins_[i]);
+  }*/
+
+  for(int i = 0; i<7; i++){
+
+    if(analogRead(buttonPins_[i] > 1000)){ //button pressed
+      buttonstate_[i] = true;
+    } else{
+      buttonstate_[i] = false;
+    }
+
+    //buttonstate_[i] = digitalRead(buttonPins_[i]);
   }
 
   return true;
