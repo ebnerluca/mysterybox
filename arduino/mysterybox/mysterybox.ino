@@ -74,8 +74,8 @@ void loop() {
 
     case 3: //MetalBar
       if(metalBar.spinOnce()){
-        if(debug){Serial.println("[Switch]: Stage 3 complete. Proceed with stage 4.");}
-        stage++;
+        if(debug){Serial.println("[Switch]: Stage 3 complete. Repeat stage 3.");}
+        //stage++;
       }
       break;
 
