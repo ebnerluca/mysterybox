@@ -87,7 +87,7 @@ bool SevenDots::updateReadings(){
 
   for(int i = 0; i<7; i++){
 
-    if(analogRead(buttonPins_[i] > 1000)){ //button pressed
+    if(analogRead(buttonPins_[i]) > 1000){ //button pressed
       buttonstate_[i] = true;
     } else{
       buttonstate_[i] = false;
@@ -164,6 +164,8 @@ bool SevenDots::success(){
 
   showCode();
 
+  reset();
+
   return true;
 }
 
@@ -178,10 +180,10 @@ bool SevenDots::showCode(){
         digitalWrite(ledPins_[n], HIGH);
       }
 
-      delay(1000); //show digit for 1 second
+      delay(1250); //show digit for 1 second
 
-      for(int n=0; i<digit; n++){ //turn all off
-        digitalWrite(ledPins_[i], LOW);
+      for(int n=0; n<digit; n++){ //turn all off
+        digitalWrite(ledPins_[n], LOW);
       }
   }
 
