@@ -2,13 +2,17 @@
 #include "Arduino.h"
 
 
-SevenDots::SevenDots(int ledPins[7], int buttonPins[7]){
+SevenDots::SevenDots(int ledPins[7], int buttonPins[7], int digits[3]){
 
 	for(int i=0; i<7; i++){
 
 		ledPins_[i] = ledPins[i];
 		buttonPins_[i] = buttonPins[i];
 	}
+
+  for(int i=0; i<3; i++){
+    digits_[i] = digits[i];
+  }
 
 }
 
@@ -156,5 +160,29 @@ bool SevenDots::success(){
     digitalWrite(ledPins_[i], LOW);
   }
 
+  delay(500);
+
+  showCode();
+
   return true;
+}
+
+bool SevenDots::showCode(){
+
+  for(int i=0; i<3; i++){ //three digits
+
+      int digit = digits_[i];
+      if(digit>7){return false;} //cannot show digit number greater than seven
+
+      for(int n=0; n<digit; n++){
+        digitalWrite(ledPins_[n], HIGH);
+      }
+
+      delay(1000); //show digit for 1 second
+
+      for(int n=0; i<digit; n++){ //turn all off
+        digitalWrite(ledPins_[i], LOW);
+      }
+  }
+
 }

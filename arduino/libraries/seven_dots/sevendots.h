@@ -6,12 +6,13 @@ class SevenDots{
 	public:
 
 		//constructor
-    	SevenDots(int ledPins[7], int buttonPins[7]);
+    	SevenDots(int ledPins[7], int buttonPins[7], int digits[3]);
 
     	bool setup();
     	bool spinOnce(); 	//returns true if all 7 leds are on
     	bool spin(); 		//calls spinOnce repeatly until true
     	bool reset();
+        bool showCode();
 
 
     private:
@@ -22,6 +23,7 @@ class SevenDots{
 		bool ledstate_[7] = {0,0,0,0,0,0,0};
 		const bool defaultLedstate_[7] = {0,0,0,0,0,0,0};
         int buttonCounter_ = 0;
+        int digits_[3];
 
         bool updateReadings();
         bool updateStates();
