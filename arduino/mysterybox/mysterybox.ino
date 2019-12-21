@@ -20,13 +20,13 @@ const int code[] = {5,2,6};
 SevenDots sevenDots(led, button, code);
 
 // MagnetPanel
-const int magnetPanelPin = A0;
+const int magnetPanelPin = 9;
 MagnetPanel magnetPanel(magnetPanelPin);
 
 
 // MetalBar
-const int metalBarPin = A1;
-MetalBar metalBar(metalBarPin);
+/*const int metalBarPin = A1;
+MetalBar metalBar(metalBarPin);*/
 
 int stage = 0;
 
@@ -44,7 +44,7 @@ void setup() {
   magnetPanel.setup();
 
   //MetalBar
-  metalBar.setup();
+  //metalBar.setup();
     
   stage = 1;
   
@@ -57,27 +57,26 @@ void loop() {
 
   switch(stage){
 
-    case 1: //SevenDots
-      if(sevenDots.spinOnce()){
+    case 1: //MagnetPanel
+      if(magnetPanel.spinOnce()){
         if(debug){Serial.println("[Switch]: Stage 1 complete. Proceed with stage 2.");}
         stage++;
-        //TODO: maybe redeclare pinModes here? this allows re-using pins
+      }
+      break;
+      
+    case 2: //SevenDots
+    if(sevenDots.spinOnce()){
+      if(debug){Serial.println("[Switch]: Stage 2 complete. Repeat stage 2.");}
+      //stage++;
       }
       break;
 
-    case 2: //MagnetPanel
-      if(magnetPanel.spinOnce()){
-        if(debug){Serial.println("[Switch]: Stage 2 complete. Proceed with stage 3.");}
-        stage++;
-      }
-      break;
-
-    case 3: //MetalBar
+    /*case 3: //MetalBar
       if(metalBar.spinOnce()){
         if(debug){Serial.println("[Switch]: Stage 3 complete. Repeat stage 3.");}
         //stage++;
       }
-      break;
+      break;*/
 
     default:
       if(debug){

@@ -11,7 +11,7 @@ MagnetPanel::MagnetPanel(int magnetPanelPin){
 
 bool MagnetPanel::setup(){
 
-	pinMode(magnetPanelPin_, INPUT);
+	pinMode(magnetPanelPin_, INPUT_PULLUP);
 
 	return true;
 
@@ -20,7 +20,7 @@ bool MagnetPanel::setup(){
 
 bool MagnetPanel::spinOnce(){
 
-	if(digitalRead(magnetPanelPin_)==HIGH){
+	if(digitalRead(magnetPanelPin_)==LOW){
     Serial.println("[MagnetPanel]: Magnet Panel combination correct!");
     return true;
   }
