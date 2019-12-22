@@ -13,6 +13,8 @@ class SevenDots{
     	bool spin(); 		//calls spinOnce repeatly until true
     	bool reset();
         bool showCode();
+        bool success();
+
 
 
     private:
@@ -27,7 +29,6 @@ class SevenDots{
 
         bool updateReadings();
         bool updateStates();
-        bool success();
 };
 
 #endif

@@ -14,13 +14,13 @@ const bool debug = true;
 
 
 // 7dots
-const int led[] = {8,7,6,5,4,3,2}; //LED pins
-const int button[] = {A0,A1,A2,A3,A4,A5,A6}; //TODO remap these pin numbers, arduino uno doesnt have enough pins
+const int led[] = {8,7,6,5,4,3,2};
+const int button[] = {A0,A1,A2,A3,A4,A5,A6};
 const int code[] = {5,2,6};
 SevenDots sevenDots(led, button, code);
 
 // MagnetPanel
-const int magnetPanelPin = 9;
+const int magnetPanelPin = 9; //uses INPUT_PULLUP
 MagnetPanel magnetPanel(magnetPanelPin);
 
 
@@ -61,6 +61,7 @@ void loop() {
       if(magnetPanel.spinOnce()){
         if(debug){Serial.println("[Switch]: Stage 1 complete. Proceed with stage 2.");}
         stage++;
+        sevenDots.success(); //visual success confirmation
       }
       break;
       

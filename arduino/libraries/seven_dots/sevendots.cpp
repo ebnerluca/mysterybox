@@ -36,7 +36,11 @@ bool SevenDots::spinOnce(){
 	//check if complete
   if((ledstate_[0]==true) && (ledstate_[1]==true) && (ledstate_[2]==true) && (ledstate_[3]==true) && (ledstate_[4]==true) && (ledstate_[5]==true) && (ledstate_[6]==true)){
 
+    Serial.println("[SevenDots]: All LEDs turned on!");
+
     success(); //visual confirmation
+    showCode(); //show lock digit code
+    reset();
     return true;
   }
 
@@ -137,8 +141,6 @@ bool SevenDots::updateStates(){
 
 
 bool SevenDots::success(){
-
-  Serial.println("[SevenDots]: All LEDs turned on!");
   
   //visual confirmation
   for(int j=0; j<3; j++){
@@ -161,10 +163,6 @@ bool SevenDots::success(){
   }
 
   delay(500);
-
-  showCode();
-
-  reset();
 
   return true;
 }
