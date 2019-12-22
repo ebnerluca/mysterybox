@@ -96,8 +96,7 @@ bool SevenDots::updateReadings(){
     } else{
       buttonstate_[i] = false;
     }
-
-    //buttonstate_[i] = digitalRead(buttonPins_[i]);
+    
   }
 
   return true;
@@ -167,6 +166,7 @@ bool SevenDots::success(){
   return true;
 }
 
+
 bool SevenDots::showCode(){
 
   for(int i=0; i<3; i++){ //three digits
@@ -183,6 +183,8 @@ bool SevenDots::showCode(){
       for(int n=0; n<digit; n++){ //turn all off
         digitalWrite(ledPins_[n], LOW);
       }
+
+      delay(1250);
   }
 
 }
