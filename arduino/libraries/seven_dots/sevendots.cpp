@@ -169,6 +169,11 @@ bool SevenDots::success(){
 
 bool SevenDots::showCode(){
 
+  Serial.print("[SevenDots::ShowCode]: Code is: ");
+  Serial.print(digits_[0]);
+  Serial.print(digits_[1]);
+  Serial.println(digits_[2]);
+
   for(int i=0; i<3; i++){ //three digits
 
       int digit = digits_[i];
@@ -184,7 +189,7 @@ bool SevenDots::showCode(){
         digitalWrite(ledPins_[n], LOW);
       }
 
-      delay(1250);
+      delay(500);
   }
 
 }

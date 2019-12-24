@@ -47,6 +47,7 @@ void setup() {
   //metalBar.setup();
     
   stage = 1;
+  sevenDots.success();
   
   if(debug){Serial.println("[Setup]: Initialized.");}
   
